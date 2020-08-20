@@ -1,8 +1,11 @@
 
 import 'dart:convert';
 import 'package:everglobe/colors/colors.dart';
+import 'package:everglobe/constants/AppConstants.dart';
 import 'package:everglobe/screens/login_screen.dart';
+import 'package:everglobe/screens/profile_screen.dart';
 import 'package:everglobe/screens/refine_search_screen.dart';
+import 'package:everglobe/screens/view_item_screen.dart';
 import 'package:everglobe/utils/api_dialog.dart';
 import 'package:everglobe/utils/no_internet_check.dart';
 import 'package:everglobe/utils/snackbar.dart';
@@ -12,6 +15,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'buy_screen.dart';
 class HomeScreen extends StatefulWidget
@@ -22,6 +26,7 @@ class HomeScreen extends StatefulWidget
 }
 class HomePageState extends State<HomeScreen>
 {
+  var textControllerSearch = new TextEditingController();
   String token;
   String userName,userEmail;
   bool loginVisible,logOutVisible;
@@ -30,8 +35,8 @@ class HomePageState extends State<HomeScreen>
   List<String> widgetList = ['A', 'B', 'C'];
   int indexOfProduct=-1;
   String message,whatsappN,mailN,phoneN,userType;
-  List<String> productNames=['Coveralls/PPE Kits','Googles','Gloves','Face Shields'];
-  List<String> productImages=['images/dummy1.jpg','images/dummy2.jpg','images/dummy3.jpg','images/dummy4.jpg'];
+  List<String> productNames=['MASK','GLOVES','PPE KITS','COVERALL / GOWNS','GOGGLES / FACE SHIELDS','WIPES / SANITIZERS','SHOE COVER / HEAD COVER','COVID TEST KITS','THERMOMETERS','OXIMETERS','VENTILATORS','THERMAL SENSOR SYSTEMS','SANITIZING TUNNELS','DISINFECTION LIQUIDS','DISINFECTION SERVICE','OTHERS'];
+  List<String> productImages=['images/01.png','images/02.png','images/03.png','images/04.png','images/05.png','images/06.png','images/07.png','images/08.png','images/09.png','images/10.png','images/11.png','images/12.png','images/13.png','images/14.png','images/15.png','images/other.jpg'];
   List<dynamic> productList=[];
   @override
   Widget build(BuildContext context) {
@@ -47,7 +52,7 @@ class HomePageState extends State<HomeScreen>
                onTap: () {
                },
                child: Container(
-                 color: MyColor.navigationHeaderColor,
+                 color: MyColor.themeColor,
                  height: 200.3,
                  child: DrawerHeader(
                    padding: EdgeInsets.zero,
@@ -72,7 +77,7 @@ class HomePageState extends State<HomeScreen>
                                                image: new DecorationImage(
                                                    fit: BoxFit.fill,
                                                    image: new AssetImage(
-                                                       "images/girl_dp.jpg")))),
+                                                       "images/user.png")))),
 
                                      ],
                                    ),
@@ -132,6 +137,7 @@ class HomePageState extends State<HomeScreen>
 
                },
              ):Container(),
+             token!='notLogin'?
              ListTile(
                title: Text(
                  'Profile',
@@ -141,8 +147,14 @@ class HomePageState extends State<HomeScreen>
                      decoration: TextDecoration.none,
                      fontFamily: 'GilroySemibold'),
                ),
-               onTap: () {},
-             ),
+               onTap: () {
+
+                 Navigator.push(context, CupertinoPageRoute(builder: (context)=>ProfileScreen()));
+
+
+
+               },
+             ):Container(),
              ListTile(
                title: Text(
                  'About Us',
@@ -188,353 +200,534 @@ class HomePageState extends State<HomeScreen>
      ),
     body: Builder(
       builder: (ctx)=>SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: Stack(
           children: <Widget>[
-            Container(
-              height: 55,
-              color: MyColor.themeColor,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: (){
-
-                      Scaffold.of(ctx).openDrawer();
-                    },
-                    child: Padding(
-                      padding:EdgeInsets.only(left: 15),
-                      child: Image.asset('images/hamber2.png',width: 25,height: 25,color: Colors.white),
-                    ),
-
-                  ),
-                  Padding(
-                    padding:EdgeInsets.only(right: 20),
-                    child: Image.asset('images/app_l.png',width: 40,height: 50,color: Colors.white),
-                  ),
-
-
-
-
-                ],
-
-
-
-              ),
-
-
-
-            ),
-            Expanded(
-              child: ListView(
-                children: <Widget>[
-                  SizedBox(height: 15),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-//Navigator.push(context, MaterialPageRoute(builder: (context)=>BuyScreen('SELL')));
-                     GestureDetector(
-                       onTap: (){
-                         Navigator.push(context, MaterialPageRoute(builder: (context)=>BuyScreen('SELL')));
-                       },
-                       child:  Container(
-                           decoration: BoxDecoration(
-                             color: MyColor.themeColor,
-                             borderRadius: BorderRadius.circular(20),
-                             border: Border.all(
-                                 color: MyColor.boxBorder, width: 0.5),
-
-
-                           ),
-
-                           child: Padding(
-                             padding: EdgeInsets.only(left: 10,right: 10,top: 3,bottom: 3),
-                             child: TextWidget('POST SELLING OFFER',Colors.white,12),
-                           )
-                       ),
-                     ),
-
-                      SizedBox(width: 10),
-                     GestureDetector(
-                       onTap: (){
-                         Navigator.push(context, MaterialPageRoute(builder: (context)=>BuyScreen('BUY')));
-                       },
-
-                       child:  Container(
-                           decoration: BoxDecoration(
-                             borderRadius: BorderRadius.circular(20),
-                             border: Border.all(
-                                 color: MyColor.boxBorder, width: 0.5),
-                           ),
-
-                           child: Padding(
-                             padding: EdgeInsets.only(left: 10,right: 10,top: 3,bottom: 3),
-                             child: TextWidget('POST BUYING REQUEST',Colors.black87,12),
-
-
-                           )
-                       ),
-                     )
-
-                    ],
-
-
-
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+            Image.asset('images/bg_sign_in.png', fit: BoxFit.fill),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Container(
+                  height: 55,
+                  color: MyColor.themeColor,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       GestureDetector(
-
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SELlING OFFERS')));
+
+                          Scaffold.of(ctx).openDrawer();
                         },
-                        child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                  color: MyColor.boxBorder, width: 0.5),
-                            ),
-
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 10,right: 10,top: 3,bottom: 3),
-                              child: TextWidget('VIEW SELLING OFFER',Colors.black87,12),
-
-
-                            )
+                        child: Padding(
+                          padding:EdgeInsets.only(left: 15),
+                          child: Image.asset('images/hamber2.png',width: 25,height: 25,color: Colors.white),
                         ),
+
                       ),
-//
-                      SizedBox(width: 10),
-                      GestureDetector(
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('BUYING REQUEST')));
+                      Padding(
+                        padding:EdgeInsets.only(right: 20),
+                        child: Image.asset('images/app_l.png',width: 40,height: 50,color: Colors.white),
+                      ),
 
-                        },
-                        child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                  color: MyColor.boxBorder, width: 0.5),
-                            ),
 
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 10,right: 10,top: 3,bottom: 3),
-                              child: TextWidget('VIEW BUYING REQUESTS',Colors.black87,12),
-                            )
-                        ),
 
-                      )
 
                     ],
 
 
 
                   ),
-                  SizedBox(height: 15),
-                  Container(
-                    height: 55,
-                    width: double.infinity,
-                    child: Stack(
 
-                      children: <Widget>[
 
-                        Padding(
-                          padding: EdgeInsets.only(left: 33, right: 33, top: 5),
-                          child: Container(
-                            child: TextFormField(
-                              style: TextStyle(
-                                  color: Colors.black.withOpacity(0.7),
-                                  fontSize: 15,
-                                  decoration: TextDecoration.none,
-                                  fontFamily: 'GilroySemibold'),
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.only(left: 10.0),
-                                border: InputBorder.none,
-                                hintText: 'What are you looking for ?',
-                                hintStyle: TextStyle(
-                                    color: MyColor.lightGreyTextColor,
-                                    fontSize: 12,
-                                    decoration: TextDecoration.none,
-                                    fontFamily: 'GilroySemibold'),
-                              ),
+
+                ),
+                Expanded(
+                  child: ListView(
+                    children: <Widget>[
+                      SizedBox(height: 15),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          GestureDetector(
+                            onTap: (){
+                              if(token=='notLogin')
+                              {
+                                showLogInDialog(context);
+                              }
+                              else
+                              {
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>BuyScreen('SELL','','','','','')));
+                              }
+
+                            },
+                            child:  Container(
+                                decoration: BoxDecoration(
+                                  color: MyColor.themeColor,
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                      color: MyColor.boxBorder, width: 0.5),
+
+
+                                ),
+
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 10,right: 10,top: 3,bottom: 3),
+                                  child: TextWidget('POST SELLING OFFER',Colors.white,12),
+                                )
                             ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              border: Border.all(
-                                  color: MyColor.boxBorder, width: 0.5),
-                              color: Colors.white,
-                            ),
-
                           ),
-                        ),
-// Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS')));
-                        GestureDetector(
-                          onTap: (){
 
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS')));
+                          SizedBox(width: 10),
+                          GestureDetector(
+                            onTap: (){
+                              if(token=='notLogin')
+                              {
+                                showLogInDialog(context);
+                              }
+                              else
+                              {
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>BuyScreen('BUY','','','','','')));
+                              }
+                            },
 
-                          },
+                            child:  Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                      color: MyColor.boxBorder, width: 0.5),
+                                ),
 
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 5,right: 33),
-                            child:  Align(
-                                alignment: Alignment.centerRight,
-                                child: Container(
-                                  width: 60,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(topRight: Radius.circular(30),bottomRight:Radius.circular(30) ),
-                                    color: MyColor.themeColor,
-                                  ),
-                                  child: Center(
-                                    child: Image.asset('images/icon_search.png',width: 25,height: 25,color: Colors.white),
-
-
-                                  ),
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 10,right: 10,top: 3,bottom: 3),
+                                  child: TextWidget('POST BUYING REQUEST',Colors.black87,12),
 
 
                                 )
-
-
                             ),
+                          )
+
+                        ],
+
+
+
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          GestureDetector(
+
+                            onTap: (){
+
+
+                              if(token=='notLogin')
+                              {
+                                showLogInDialog(context);
+                              }
+                              else
+                              {
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SELLING OFFERS','View','seller',token)));
+
+                              }
+
+
+                            },
+                            child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                      color: MyColor.boxBorder, width: 0.5),
+                                ),
+
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 10,right: 10,top: 3,bottom: 3),
+                                  child: TextWidget('VIEW SELLING OFFER',Colors.black87,12),
+
+
+                                )
+                            ),
+                          ),
+//
+                          SizedBox(width: 10),
+                          GestureDetector(
+                            onTap: (){
+
+                              if(token=='notLogin')
+                              {
+                                showLogInDialog(context);
+                              }
+                              else
+                              {
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('BUYING REQUEST','View','buyer',token)));
+
+                              }
+                            },
+                            child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                      color: MyColor.boxBorder, width: 0.5),
+                                ),
+
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 10,right: 10,top: 3,bottom: 3),
+                                  child: TextWidget('VIEW BUYING REQUESTS',Colors.black87,12),
+                                )
+                            ),
+
+                          )
+
+                        ],
+
+
+
+                      ),
+                      SizedBox(height: 15),
+                      Container(
+                        height: 55,
+                        width: double.infinity,
+                        child: Stack(
+
+                          children: <Widget>[
+
+                            Padding(
+                              padding: EdgeInsets.only(left: 33, right: 33, top: 5),
+                              child: Container(
+                                child: TextFormField(
+                                  controller: textControllerSearch,
+                                  style: TextStyle(
+                                      color: Colors.black.withOpacity(0.7),
+                                      fontSize: 15,
+                                      decoration: TextDecoration.none,
+                                      fontFamily: 'GilroySemibold'),
+                                  decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.only(left: 10.0),
+                                    border: InputBorder.none,
+                                    hintText: 'What are you looking for ?',
+                                    hintStyle: TextStyle(
+                                        color: MyColor.lightGreyTextColor,
+                                        fontSize: 12,
+                                        decoration: TextDecoration.none,
+                                        fontFamily: 'GilroySemibold'),
+                                  ),
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  border: Border.all(
+                                      color: MyColor.boxBorder, width: 0.5),
+                                  color: Colors.white,
+                                ),
+
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: (){
+                                if(textControllerSearch.text=='')
+                                {
+                                  MySnackbar.displaySnackbar(key, MyColor.noInternetColor, 'Enter search text');
+                                }
+                                else
+                                {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS','search',textControllerSearch.text,token)));
+                                }
+                              },
+
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 5,right: 33),
+                                child:  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Container(
+                                      width: 60,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(topRight: Radius.circular(30),bottomRight:Radius.circular(30) ),
+                                        color: MyColor.themeColor,
+                                      ),
+                                      child: Center(
+                                        child: Image.asset('images/icon_search.png',width: 25,height: 25,color: Colors.white),
+
+
+                                      ),
+
+
+                                    )
+
+
+                                ),
+
+
+                              ),
+
+                            )
+
+
+                          ],
+
+
+                        ),
+
+
+                      ),
+
+
+
+                      SizedBox(height: 20),
+                    /*  GestureDetector(
+                        onTap: (){
+                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS')));
+                        },
+
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 20,right: 20),
+                          child: Row(
+
+                            children: <Widget>[
+
+                              GestureDetector(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS','cat','mask')));
+                                },
+                                child: HomeItemWidget('MASK'),
+
+                              ),
+                              SizedBox(width: 7,),
+
+                              GestureDetector(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS','cat','Coveralls')));
+                                },
+                                child: HomeItemWidget('Coveralls/PPE Kits'),
+
+                              ),
+                              SizedBox(width: 7,),
+                              GestureDetector(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS','cat','gloves')));
+                                },
+                                child: HomeItemWidget('Gloves'),
+
+                              ),
+                              SizedBox(width: 7,),
+                              *//*    GestureDetector(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS','cat','mask')));
+                            },
+                            child: HomeItemWidget('MASK'),
+
+                          ),*//*
+                            ],
 
 
                           ),
 
-                        )
 
-
-                      ],
-
-
-                    ),
-
-
-                  ),
-
-                  //// Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS')));
-
-                  SizedBox(height: 20),
-                  GestureDetector(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS')));
-                    },
-
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 20,right: 20),
-                      child: Row(
-
-                        children: <Widget>[
-
-                          HomeItemWidget('MASK'),
-                          SizedBox(width: 7,),
-                          HomeItemWidget('COVERALLS/PPE KITS'),
-                          SizedBox(width: 7,),
-                          HomeItemWidget('MASK'),
-                          SizedBox(width: 7,),
-                          HomeItemWidget('MASK'),
-                        ],
+                        ),
 
 
                       ),
+                      SizedBox(height: 10),
+                      GestureDetector(
+                        onTap: (){
+                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS')));
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 20,right: 20),
+                          child: Row(
+
+                            children: <Widget>[
+                              GestureDetector(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS','cat','Hand Sanitizer')));
+                                },
+                                child: HomeItemWidget('Hand Sanitizer'),
+
+                              ),
+                              SizedBox(width: 7,),
+                              GestureDetector(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS','cat','testing kits')));
+                                },
+                                child: HomeItemWidget('Covid19 Testing kits'),
+
+                              ),
+                              SizedBox(width: 7,),
+                              GestureDetector(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS','cat','mask')));
+                                },
+                                child: HomeItemWidget('MASK'),
+
+                              ),
+                              SizedBox(width: 7,),
+
+                            ],
 
 
-                    ),
+                          ),
 
 
-                  ),
-                  SizedBox(height: 10),
-                  GestureDetector(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS')));
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 20,right: 20),
-                      child: Row(
-
-                        children: <Widget>[
-
-                          HomeItemWidget('HAND SANITIZER'),
-                          SizedBox(width: 7,),
-                          HomeItemWidget('MASK'),
-                          SizedBox(width: 7,),
-                          HomeItemWidget('MASK'),
-                          SizedBox(width: 7,),
-                          HomeItemWidget('MASK'),
-                        ],
+                        ),
 
 
                       ),
+                      SizedBox(height: 10),
+                      GestureDetector(
+
+                        onTap: (){
+                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS')));
+                        },
+                        child:  Padding(
+                          padding: EdgeInsets.only(left: 20,right: 20),
+                          child: Row(
+
+                            children: <Widget>[
 
 
-                    ),
+                              // Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS','cat','mask')));
+                              GestureDetector(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS','cat','goggles')));
+                                },
+                                child: HomeItemWidget('Goggles/Face Shields'),
+
+                              ),
+                              SizedBox(width: 7,),
+                              GestureDetector(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS','cat','Shoe Cover')));
+                                },
+                                child: HomeItemWidget('Shoe Cover/Head Cover'),
+
+                              ),
 
 
-                  ),
-                  SizedBox(height: 10),
-                 GestureDetector(
-
-                   onTap: (){
-                     Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS')));
-                   },
-                   child:  Padding(
-                     padding: EdgeInsets.only(left: 20,right: 20),
-                     child: Row(
-
-                       children: <Widget>[
-
-                         HomeItemWidget('MASK'),
-                         SizedBox(width: 7,),
-                         HomeItemWidget('COVERALLS/PPE KITS'),
-                         SizedBox(width: 7,),
-                         HomeItemWidget('MASK'),
-                         SizedBox(width: 7,),
-                         HomeItemWidget('MASK'),
-                       ],
 
 
-                     ),
 
 
-                   ),
+                            ],
 
 
-                 ),
-                  SizedBox(height: 10),
-                 GestureDetector(
-                   onTap: (){
-                     Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS')));
-
-                   },
-                   child:  Padding(
-                     padding: EdgeInsets.only(left: 20,right: 20),
-                     child: Row(
-
-                       children: <Widget>[
-
-                         HomeItemWidget('HAND SANITIZER'),
-                         SizedBox(width: 7,),
-                         HomeItemWidget('MASK'),
-                         SizedBox(width: 7,),
-                         HomeItemWidget('MASK'),
-                         SizedBox(width: 7,),
-                         HomeItemWidget('MASK'),
-                       ],
+                          ),
 
 
-                     ),
+                        ),
 
 
-                   ),
+                      ),
+                      SizedBox(height: 10),
+                      GestureDetector(
+                        onTap: (){
+                          //  Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS')));
+
+                        },
+                        child:  Padding(
+                          padding: EdgeInsets.only(left: 20,right: 20),
+                          child: Row(
+
+                            children: <Widget>[
+                              GestureDetector(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS','cat','Oximeters')));
+                                },
+                                child: HomeItemWidget('Thermometers/Oximeters'),
+
+                              ),
+                              SizedBox(width: 7,),
+                              GestureDetector(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS','cat','Ventilators')));
+                                },
+                                child: HomeItemWidget('Ventilators'),
+
+                              ),
+                              SizedBox(width: 7,),
+                              GestureDetector(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS','cat','other')));
+                                },
+                                child: HomeItemWidget('Other'),
+
+                              ),
+
+                            ],
 
 
-                 ),
-                  SizedBox(height: 20),
-                  Padding(
-                    padding: EdgeInsets.only(right: 20),
-                    child: GridView.count(
-                      crossAxisCount: 2,
+                          ),
+
+
+                        ),
+
+
+                      ),
+                      SizedBox(height: 20),*/
+                      Padding(
+                          padding: EdgeInsets.only(right: 20),
+                          child:
+                          GridView.builder(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4,
+                              childAspectRatio: 2/2.5/*MediaQuery.of(context).size.width/(MediaQuery.of(context).size.height/4)*/
+                          ),
+                              itemCount: productImages.length,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemBuilder: (BuildContext context,int position)
+                              {
+
+                                return GestureDetector(
+                                  onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS','cat',productNames[position],token)));
+                                  },
+
+                                  child: Container(
+                                    margin: EdgeInsets.only(left: 20),
+                                    child: Column(
+                                      children: <Widget>[
+                                        Container(
+                                          height:60,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10),
+
+                                          ),
+
+                                          child: Center(
+
+                                              child:  Padding(
+                                                padding: EdgeInsets.all(5),
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius.circular(8.0),
+                                                  child: Image.asset(productImages[position],width: 55,height: 45,),
+                                                ),
+                                              )
+
+                                          ),
+
+
+                                        ),
+
+
+
+
+                                        SizedBox(height:5),
+
+                                        Text(
+                                          productNames[position],
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(fontSize: 10,color: MyColor.greyTextColor,fontFamily: 'GilroySemibold'),
+                                        )
+
+
+                                      ],
+
+
+
+                                    ),
+                                  ),
+                                );
+
+                              })
+
+
+                        /*GridView.count(
+                      crossAxisCount: 4,
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
@@ -542,25 +735,38 @@ class HomePageState extends State<HomeScreen>
                         indexOfProduct=indexOfProduct+1;
                         return new  GestureDetector(
                           onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS')));
-                          },
+                            if(token=='notLogin')
+                            {
+                              showLogInDialog(context);
+                            }
+                            else
+                            {
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SEARCH RESULTS','cat','mask')));
+                            }
 
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 20),
+
+                          },
+                          child: Container(
+                            color: Colors.lightBlue,
+                            height: 80,
+                            margin: EdgeInsets.only(left: 20),
                             child: Column(
                               children: <Widget>[
                                 Container(
-                                  height:130,
+                                  height:60,
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(10),
                                     color: MyColor.themeColor,
                                   ),
 
                                   child: Center(
 
-                                      child:  ClipRRect(
-                                        borderRadius: BorderRadius.circular(8.0),
-                                        child: Image.asset(value,width: 80,height: 80,),
+                                      child:  Padding(
+                                        padding: EdgeInsets.all(5),
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(8.0),
+                                          child: Image.asset(value,width: 55,height: 45,),
+                                        ),
                                       )
 
                                   ),
@@ -571,12 +777,12 @@ class HomePageState extends State<HomeScreen>
 
 
 
-                                SizedBox(height:10),
+                                SizedBox(height:5),
 
-                                indexOfProduct<=3? Text(
+                                indexOfProduct<=11? Text(
                                   productNames[indexOfProduct],
-                                  style: TextStyle(fontSize: 15,color: MyColor.greyTextColor,fontFamily: 'GilroySemibold'),
-                                ):Text('Mask')
+                                  style: TextStyle(fontSize: 12,color: MyColor.greyTextColor,fontFamily: 'GilroySemibold'),
+                                ):Text('Mask tef qdvytqd qtdqeytd dtyqfd gwdwqd ',style: TextStyle(fontSize: 12,color: MyColor.greyTextColor,fontFamily: 'GilroySemibold'))
 
 
 
@@ -593,174 +799,254 @@ class HomePageState extends State<HomeScreen>
 
                         );
                       }).toList(),
-                    ),
-                  ),
+                    ),*/
+                      ),
 
 
-                  Divider(color: MyColor.dividerColor),
-                  Padding(
-                    padding: EdgeInsets.only(left: 20),
-                    child: TextWidget('Latest Leads',MyColor.greyTextColor,20),
-                  ),
+                      Divider(color: MyColor.dividerColor),
+                      Padding(
+                        padding: EdgeInsets.only(left: 20),
+                        child: TextWidget('Latest Leads',MyColor.greyTextColor,20),
+                      ),
 
-                  SizedBox(height: 10),
+                      SizedBox(height: 10),
 
-                  ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: productList.length,
-                      scrollDirection: Axis.vertical,
-                      itemBuilder: (BuildContext context,int position)
-                      {
-                        return Padding(
-                          padding: EdgeInsets.only(left: 20,right: 20,top: 7,bottom: 7),
-                          child: Card(
-                              margin: EdgeInsets.zero,
-                              elevation: 5,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child:Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 15,top: 10,right: 10),
-                                      child: Text(
-                                        productList[position]['vchDescriptions'],
-                                        style: TextStyle(fontSize: 15,color: MyColor.textColorBlue,fontFamily: 'GilroySemibold'),
-                                      ),
-                                    ),
-                                    Divider(
-                                      color: MyColor.dividerColor,
-                                    ),
-                                    Container(
-
-                                      child: Row(
-                                        children: <Widget>[
-                                          Expanded(
-                                            child: Center(
-                                                child: TextWidget(productList[position]['vchUserType'],Colors.brown,16)
+                      ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: productList.length,
+                          scrollDirection: Axis.vertical,
+                          itemBuilder: (BuildContext context,int position)
+                          {
+                            return Padding(
+                              padding: EdgeInsets.only(left: 20,right: 20,top: 7,bottom: 7),
+                              child: Card(
+                                  margin: EdgeInsets.zero,
+                                  elevation: 5,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child:Container(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                                      children: <Widget>[
+                                        GestureDetector(
+                                          onTap:(){
+                                            if(token=='notLogin')
+                                            {
+                                              showLogInDialog(context);
+                                            }
+                                            else
+                                            {
+                                              Navigator.push(context, CupertinoPageRoute(builder: (context)=>ViewItemScreen(productList[position]['intProductId'].toString())));
+                                            }
+                                          },
+                                          child: Padding(
+                                            padding: EdgeInsets.only(left: 15,top: 10,right: 10),
+                                            child: Text(
+                                              productList[position]['vchDescriptions'],
+                                              style: TextStyle(fontSize: 15,color: MyColor.textColorBlue,fontFamily: 'GilroySemibold'),
                                             ),
-                                            flex: 1,
                                           ),
 
-                                          Container(color: MyColor.dividerColor,width: 1,height:38,),
 
-
-                                          Expanded(
-                                            child: Center(
-                                                child: InkWell(
-                                                  onTap: (){
-
-
-
-                                                    showLogInDialog(context);
+                                        ),
 
 
 
 
 
+                                        Divider(
+                                          color: MyColor.dividerColor,
+                                        ),
+                                        Container(
 
-                                                  },
-                                                  child: Container(
-                                                      decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(10),
-                                                        color: MyColor.classyGreen,
-                                                      ),
-                                                      width: 120,
-                                                      height: 40,
-                                                      child: Center(
-                                                        child: TextWidget('View Item',Colors.white,15),
+                                          child: Row(
+                                            children: <Widget>[
 
+
+                                              Expanded(
+                                                child: GestureDetector(
+                                                  onTap:(){
+                                                    if(token=='notLogin')
+                                                    {
+                                                      showLogInDialog(context);
+                                                    }
+                                                    else
+                                                    {
+                                                      Navigator.push(context, CupertinoPageRoute(builder: (context)=>ViewItemScreen(productList[position]['intProductId'].toString())));
+                                                    }
+                                        },
+                                                  child: Padding(
+                                                      padding:EdgeInsets.all(5),
+                                                      child:  FadeInImage.assetNetwork(
+                                                        height: 30,
+                                                        width: 60,
+                                                        placeholder: 'images/launcher_icon.png',
+                                                        image: AppConstants.imageBaseUrl+productList[position]['ImgPath'],
                                                       )
-
-
-
                                                   ),
 
 
-                                                )
-                                            ),
-                                            flex: 1,
-                                          )
+                                                ),
 
-
-
-
-
-
-
-                                        ],
-
-
-
-                                      ),
-
-                                    ),
-                                    Divider(
-                                      color: MyColor.dividerColor,
-                                    ),
-                                    Row(
-                                      children: <Widget>[
-                                        Expanded(
-                                          child: GestureDetector(
-                                            onTap: () async {
-                                              //launchWhatsApp(productList[position]['vchWhatsAppNo'].toString());
-                                            },
-                                            child: Container(
-                                              child: Center(
-                                                child: Image.asset('images/whatsapp.png',width: 40,height: 40,),
+                                                flex: 1,
                                               ),
-                                            ),
-                                          ),
-                                          flex: 1,
-                                        ),
-
-                                        Container(color: MyColor.dividerColor,width: 1,height:38,),
-                                        Expanded(
-                                          child: GestureDetector(
-                                            onTap: (){
 
 
-                                             // _launchURL('dummy@gmail.com','Buy Products', '');
+                                              Container(color: MyColor.dividerColor,width: 1,height:38,),
+                                              Expanded(
+                                                child: GestureDetector(
+                                                  onTap: (){
 
+                                                    if(token=='notLogin')
+                                                    {
+                                                      showLogInDialog(context);
+                                                    }
+                                                    else
+                                                    {
+                                                      Navigator.push(context, CupertinoPageRoute(builder: (context)=>ViewItemScreen(productList[position]['intProductId'].toString())));
+                                                    }
 
-                                              //detr
-                                            },
-                                            child: Container(
-                                              child: Center(
-                                                child: Image.asset('images/mail.png',width: 40,height: 40,),
+                                                  },
+                                                  child: Center(
+                                                      child: TextWidget(productList[position]['vchUserType'],Colors.brown,16)
+                                                  ),
+
+                                                ),
+                                                flex: 1,
                                               ),
-                                            ),
+
+                                              Container(color: MyColor.dividerColor,width: 1,height:38,),
+
+
+                                              Expanded(
+                                                child: Center(
+                                                    child: InkWell(
+                                                      onTap: (){
+
+
+                                                        if(token=='notLogin')
+                                                        {
+
+                                                          showLogInDialog(context);
+                                                        }
+                                                        else
+                                                        {
+
+                                                          Navigator.push(context, CupertinoPageRoute(builder: (context)=>ViewItemScreen(productList[position]['intProductId'].toString())));
+
+
+                                                        }
+
+                                                      },
+                                                      child: Container(
+                                                          decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(10),
+                                                            color: MyColor.classyGreen,
+                                                          ),
+                                                          width: 90,
+                                                          height: 40,
+                                                          child: Center(
+                                                            child: TextWidget('View Item',Colors.white,15),
+
+                                                          )
+
+
+
+                                                      ),
+
+
+                                                    )
+                                                ),
+                                                flex: 1,
+                                              )
+
+
+
+
+
+
+
+                                            ],
+
+
+
                                           ),
-                                          flex: 1,
 
                                         ),
-
-                                        Container(color: MyColor.dividerColor,width: 1,height:38,),
-                                        Expanded(
-                                          child:GestureDetector(
-                                            onTap: (){
-
-                                              //_makePhoneCall('tel:'+productList[position]['vchMobileNo']);
-
-                                            },
-                                            child:  Container(
-                                              child: Center(
-                                                child: Image.asset('images/call.png',width: 35,height: 35,),
+                                        Divider(
+                                          color: MyColor.dividerColor,
+                                        ),
+                                        Row(
+                                          children: <Widget>[
+                                            Expanded(
+                                              child: GestureDetector(
+                                                onTap: () async {
+                                                  launchWhatsApp(productList[position]['vchWhatsAppNo'].toString());
+                                                },
+                                                child: Container(
+                                                  child: Center(
+                                                    child: Image.asset('images/whatsapp.png',width: 40,height: 40,),
+                                                  ),
+                                                ),
                                               ),
+                                              flex: 1,
                                             ),
 
-                                          ),
-                                          flex: 1,
+                                            Container(color: MyColor.dividerColor,width: 1,height:38,),
+                                            Expanded(
+                                              child: GestureDetector(
+                                                onTap: (){
+
+
+                                                  _launchURL(productList[position]['vchUserID'],'', '');
+
+
+                                                  //detr
+                                                },
+                                                child: Container(
+                                                  child: Center(
+                                                    child: Image.asset('images/mail.png',width: 40,height: 40,),
+                                                  ),
+                                                ),
+                                              ),
+                                              flex: 1,
+
+                                            ),
+
+                                            Container(color: MyColor.dividerColor,width: 1,height:38,),
+                                            Expanded(
+                                              child:GestureDetector(
+                                                onTap: (){
+                                                  _makePhoneCall('tel:'+productList[position]['vchMobileNo']);
+
+                                                },
+                                                child:  Container(
+                                                  child: Center(
+                                                    child: Image.asset('images/phone99.png',width: 25,height: 25,),
+                                                  ),
+                                                ),
+
+                                              ),
+                                              flex: 1,
+
+                                            ),
+
+
+
+
+
+
+
+
+
+
+                                          ],
+
 
                                         ),
-
-
-
-
-
+                                        SizedBox(height: 7,)
 
 
 
@@ -769,60 +1055,56 @@ class HomePageState extends State<HomeScreen>
                                       ],
 
 
+
                                     ),
-                                    SizedBox(height: 7,)
+                                  )
+
+
+
+
+                              ),
+
+
+                            );
+                          }
+
+
+                      ),
+
+                      SizedBox(height: 10,)
 
 
 
 
 
-                                  ],
-
-
-
-                                ),
-                              )
 
 
 
 
-                          ),
 
 
-                        );
-                      }
 
+
+
+
+
+                    ],
 
                   ),
 
-                  SizedBox(height: 10,)
+                )
 
 
+              ],
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-                ],
-
-              ),
-
-            )
-
+            ),
 
           ],
 
 
-        ),
+
+        )
 
 
       ),
@@ -893,9 +1175,9 @@ class HomePageState extends State<HomeScreen>
     checkInternetAPIcall();
   }
 
- /* Future<void> launchWhatsApp(String phone) async {
-    if (await canLaunch("https://api.whatsapp.com/send?phone=+00 " + phone)) {
-      await launch("https://api.whatsapp.com/send?phone=+00 " + phone);
+  Future<void> launchWhatsApp(String phone) async {
+    if (await canLaunch("https://api.whatsapp.com/send?phone=" + phone)) {
+      await launch("https://api.whatsapp.com/send?phone=" + phone);
     }
   }
   Future<void> _makePhoneCall(String url) async {
@@ -914,7 +1196,6 @@ class HomePageState extends State<HomeScreen>
       throw 'Could not launch $url';
     }
   }
-*/
 
   showLogInDialog(BuildContext context) {
     // set up the buttons

@@ -9,7 +9,7 @@ import 'colors/colors.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  String token=await prefs.getString('access_token') ?? 'notLogin';
+  String token=await prefs.getString('userid') ?? 'notLogin';
   print(token);
   print(await prefs.getString('name'));
   runApp(MyApp(token));
