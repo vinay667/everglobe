@@ -347,6 +347,14 @@ class LoginPageState extends State<LoginScreen> {
       //Navigator.pop(context);
     }
   }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    textControllerUserName.text='vinay@gmail.com';
+    textControllerPassword.text='123456';
+  }
+
 
   _saveUserDetail(String email,String usertype,String userId,String userName,String registeredOn,String companyName,String city,String state,String country)
   async {
