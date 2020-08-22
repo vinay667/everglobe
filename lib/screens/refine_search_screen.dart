@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'package:everglobe/colors/colors.dart';
 import 'package:everglobe/constants/AppConstants.dart';
+import 'package:everglobe/dialog/error_dialog.dart';
 import 'package:everglobe/screens/view_item_screen.dart';
 import 'package:everglobe/utils/api_dialog.dart';
 import 'package:everglobe/screens/login_screen.dart';
@@ -13,7 +14,8 @@ import 'package:everglobe/widgets/text_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:toast/toast.dart';
+
+import '../colors/colors.dart';
 
 class RefineSearchScreen extends StatefulWidget
 {
@@ -602,7 +604,8 @@ class RefineSearchState extends State<RefineSearchScreen>
                                    height:60,
                                    decoration: BoxDecoration(
                                      borderRadius: BorderRadius.circular(10),
-                                     color: MyColor.themeColor,
+                                     color: Colors.white,
+                                     border: Border.all(color: MyColor.themeColor,width: 2)
                                    ),
 
                                    child: Center(
@@ -701,8 +704,13 @@ class RefineSearchState extends State<RefineSearchScreen>
 
       if(searchList2.length==0)
         {
-          Toast.show('No Results found !', context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM,backgroundColor: Colors.lightBlue,);
 
+
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (_) => ErrorDialog('No Results found !!',context),
+          );
         }
 
 
@@ -782,8 +790,11 @@ class RefineSearchState extends State<RefineSearchScreen>
       });
       if(searchList2.length==0)
       {
-        Toast.show('No Results found !', context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM,backgroundColor: Colors.lightBlue,);
-      }
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) => ErrorDialog('No Results found !!!',context),
+        );      }
       print(fetchResponse);
 
     } catch (errorMessage) {

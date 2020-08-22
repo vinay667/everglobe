@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:everglobe/colors/colors.dart';
 import 'package:everglobe/constants/AppConstants.dart';
+import 'package:everglobe/dialog/error_dialog.dart';
+import 'package:everglobe/dialog/success_dialog.dart';
 import 'package:everglobe/screens/sign_up_screen.dart';
 import 'package:everglobe/utils/api_dialog.dart';
 import 'package:everglobe/utils/no_internet_check.dart';
@@ -21,7 +23,7 @@ class ProfileScreen extends StatefulWidget {
 
 class ProfileState extends State<ProfileScreen> {
   GlobalKey<ScaffoldState> key = new GlobalKey<ScaffoldState>();
-  String userEmail = '';
+  String userEmail = '',city='',state='',country='';
   String userId = '';
   String userType = '';
   String registeredOn = '';
@@ -68,7 +70,21 @@ class ProfileState extends State<ProfileScreen> {
                           ),
 
                           SizedBox(height: 10),
+                         Container(height: 20,width: double.infinity,
+                         child:  Center(
+                           child: Row(
+                             mainAxisAlignment: MainAxisAlignment.center,
+                             children: <Widget>[
+                               TextWidget(city==null?'':city+',', Colors.black, 15),
+                               TextWidget(state==null?'':state+',', Colors.black, 15),
+                               TextWidget(country==null?'':country, Colors.black, 15),
+                             ],
 
+
+                           ),
+                         ),
+
+                         ),
                           Container(
                             width: double.infinity,
                             child: Row(
@@ -316,7 +332,11 @@ class ProfileState extends State<ProfileScreen> {
       userId = prefs.getString('userid');
       registeredOn = prefs.getString('registered');
       userType = prefs.getString('usertype');
+      city = prefs.getString('city');
+      state = prefs.getString('state');
+      country = prefs.getString('country');
     });
+    print(userEmail+country);
 
     checkInternetAPIcall();
   }
@@ -345,12 +365,10 @@ class ProfileState extends State<ProfileScreen> {
       });
 
       if (list.length == 0) {
-        Toast.show(
-          'No Posts found !!',
-          context,
-          duration: Toast.LENGTH_SHORT,
-          gravity: Toast.BOTTOM,
-          backgroundColor: Colors.lightBlue,
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) => SuccessDialog('No Posts Found !!',context),
         );
       }
     } catch (errorMessage) {
@@ -375,21 +393,18 @@ class ProfileState extends State<ProfileScreen> {
       print(fetchResponse);
 
       if (fetchResponse['Status'].toString() == 'true') {
-        Toast.show(
-          fetchResponse['Message'],
-          context,
-          duration: Toast.LENGTH_SHORT,
-          gravity: Toast.BOTTOM,
-          backgroundColor: Colors.lightBlue,
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) => SuccessDialog(fetchResponse['Message'],context),
         );
         getUserPosts();
       } else {
-        Toast.show(
-          fetchResponse['Message'],
-          context,
-          duration: Toast.LENGTH_SHORT,
-          gravity: Toast.BOTTOM,
-          backgroundColor: Colors.lightBlue,
+
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) => ErrorDialog(fetchResponse['Message'],context),
         );
       }
 
@@ -398,12 +413,11 @@ class ProfileState extends State<ProfileScreen> {
       message = errorMessage.toString();
       print(message);
       Navigator.of(context, rootNavigator: true).pop();
-      Toast.show(
-        'Delete Post successfully.',
-        context,
-        duration: Toast.LENGTH_SHORT,
-        gravity: Toast.BOTTOM,
-        backgroundColor: Colors.lightBlue,
+
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => SuccessDialog('Post Deleted successfully!!',context),
       );
       getUserPosts();
 

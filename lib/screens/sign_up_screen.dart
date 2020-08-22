@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:everglobe/colors/colors.dart';
+import 'package:everglobe/dialog/error_dialog.dart';
 import 'package:everglobe/utils/api_dialog.dart';
 import 'package:everglobe/utils/no_internet_check.dart';
 import 'package:everglobe/utils/snackbar.dart';
-import 'package:everglobe/dialog/driver_rating_dialog.dart';
+import 'package:everglobe/dialog/success_dialog.dart';
 import 'package:everglobe/widgets/text_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,9 @@ import 'package:toast/toast.dart';
 
 class SignUpSreen extends StatefulWidget {
   String callbackType;
+
   SignUpSreen(this.callbackType);
+
   SignUpState createState() => SignUpState(callbackType);
 }
 
@@ -27,8 +30,7 @@ class SignUpState extends State<SignUpSreen> {
 
   SignUpState(this.callbackType);
 
-  String userId = '',
-      imageAsBase64;
+  String userId = '', imageAsBase64 = '';
   GlobalKey<ScaffoldState> key = new GlobalKey<ScaffoldState>();
   String dropdownValue = 'Select User Type';
   List<String> countryList = [];
@@ -130,7 +132,7 @@ class SignUpState extends State<SignUpSreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             border:
-                            Border.all(color: MyColor.boxBorder, width: 1),
+                                Border.all(color: MyColor.boxBorder, width: 1),
                             color: Colors.white,
                           ),
                         ),
@@ -181,7 +183,7 @@ class SignUpState extends State<SignUpSreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             border:
-                            Border.all(color: MyColor.boxBorder, width: 1),
+                                Border.all(color: MyColor.boxBorder, width: 1),
                             color: Colors.white,
                           ),
                         ),
@@ -189,7 +191,6 @@ class SignUpState extends State<SignUpSreen> {
                     ],
                   ),
                 ),
-
 
                 Container(
                   width: double.infinity,
@@ -233,7 +234,7 @@ class SignUpState extends State<SignUpSreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             border:
-                            Border.all(color: MyColor.boxBorder, width: 1),
+                                Border.all(color: MyColor.boxBorder, width: 1),
                             color: Colors.white,
                           ),
                         ),
@@ -241,7 +242,6 @@ class SignUpState extends State<SignUpSreen> {
                     ],
                   ),
                 ),
-
 
                 //spinner data
                 Container(
@@ -338,7 +338,7 @@ class SignUpState extends State<SignUpSreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             border:
-                            Border.all(color: MyColor.boxBorder, width: 1),
+                                Border.all(color: MyColor.boxBorder, width: 1),
                             color: Colors.white,
                           ),
                         ),
@@ -346,7 +346,6 @@ class SignUpState extends State<SignUpSreen> {
                     ],
                   ),
                 ),
-
 
                 Container(
                   width: double.infinity,
@@ -377,8 +376,8 @@ class SignUpState extends State<SignUpSreen> {
                             maxLines: 1,
                             controller: textControllerAddress,
                             decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.only(
-                                  left: 10.0, bottom: 5),
+                              contentPadding:
+                                  const EdgeInsets.only(left: 10.0, bottom: 5),
                               border: InputBorder.none,
                               hintText: 'Enter address',
                               hintStyle: TextStyle(
@@ -391,7 +390,7 @@ class SignUpState extends State<SignUpSreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             border:
-                            Border.all(color: MyColor.boxBorder, width: 1),
+                                Border.all(color: MyColor.boxBorder, width: 1),
                             color: Colors.white,
                           ),
                         ),
@@ -442,7 +441,7 @@ class SignUpState extends State<SignUpSreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             border:
-                            Border.all(color: MyColor.boxBorder, width: 1),
+                                Border.all(color: MyColor.boxBorder, width: 1),
                             color: Colors.white,
                           ),
                         ),
@@ -492,7 +491,7 @@ class SignUpState extends State<SignUpSreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             border:
-                            Border.all(color: MyColor.boxBorder, width: 1),
+                                Border.all(color: MyColor.boxBorder, width: 1),
                             color: Colors.white,
                           ),
                         ),
@@ -542,7 +541,7 @@ class SignUpState extends State<SignUpSreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             border:
-                            Border.all(color: MyColor.boxBorder, width: 1),
+                                Border.all(color: MyColor.boxBorder, width: 1),
                             color: Colors.white,
                           ),
                         ),
@@ -589,8 +588,8 @@ class SignUpState extends State<SignUpSreen> {
                             dropdownValueCountry = newValue;
                           });
                         },
-                        items: countryList.map<DropdownMenuItem<String>>((
-                            String value) {
+                        items: countryList
+                            .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value),
@@ -639,7 +638,7 @@ class SignUpState extends State<SignUpSreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             border:
-                            Border.all(color: MyColor.boxBorder, width: 1),
+                                Border.all(color: MyColor.boxBorder, width: 1),
                             color: Colors.white,
                           ),
                         ),
@@ -647,7 +646,6 @@ class SignUpState extends State<SignUpSreen> {
                     ],
                   ),
                 ),
-
 
                 Container(
                   width: double.infinity,
@@ -690,7 +688,7 @@ class SignUpState extends State<SignUpSreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             border:
-                            Border.all(color: MyColor.boxBorder, width: 1),
+                                Border.all(color: MyColor.boxBorder, width: 1),
                             color: Colors.white,
                           ),
                         ),
@@ -699,14 +697,11 @@ class SignUpState extends State<SignUpSreen> {
                   ),
                 ),
 
-
                 Padding(
                   padding: EdgeInsets.only(left: 56),
                   child: Row(
                     children: <Widget>[
                       Container(
-
-
                         child: Text(
                           'Mobile Number *',
                           style: TextStyle(
@@ -716,7 +711,6 @@ class SignUpState extends State<SignUpSreen> {
                               fontFamily: 'GilroySemibold'),
                         ),
                       ),
-
                       Padding(
                         padding: EdgeInsets.only(left: 6),
                         child: Switch(
@@ -732,16 +726,9 @@ class SignUpState extends State<SignUpSreen> {
                           inactiveThumbColor: MyColor.themeColor,
                         ),
                       ),
-
-
                     ],
-
-
                   ),
-
-
                 ),
-
 
                 Container(
                   height: 55,
@@ -776,10 +763,8 @@ class SignUpState extends State<SignUpSreen> {
                                 color: MyColor.boxBorder, width: 0.5),
                             color: Colors.white,
                           ),
-
                         ),
                       ),
-
                       GestureDetector(
                         onTap: () {
                           showDialog22('phone');
@@ -804,32 +789,31 @@ class SignUpState extends State<SignUpSreen> {
                                       bottomLeft: Radius.circular(30)),
                                   color: MyColor.themeColor,
                                 ),
-                                 child: Center(
-                               child: Padding(
-                                 padding: EdgeInsets.only(left:2),
-                                 child:Row(
-                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                   children: <Widget>[
-
-                                     Padding(
-                                       padding: EdgeInsets.only(left: 3),
-                                       child: Text(phoneNumber,style: TextStyle(color: Colors.white,fontSize: 12)),
-
-
-                                     ),
-                                     Padding(
-                                       padding: EdgeInsets.only(right: 3),
-                                       child:  Icon(Icons.arrow_drop_down,color: Colors.white,),
-
-
-                                     ),
-
-                                   ],
-
-
-
-                                 )
-                                 /*Theme(
+                                child: Center(
+                                    child: Padding(
+                                        padding: EdgeInsets.only(left: 2),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            Padding(
+                                              padding: EdgeInsets.only(left: 3),
+                                              child: Text(phoneNumber,
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 12)),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  EdgeInsets.only(right: 3),
+                                              child: Icon(
+                                                Icons.arrow_drop_down,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                        /*Theme(
                                      data: Theme.of(context).copyWith(
                                        canvasColor: Colors.blue.shade200,
                                      ),
@@ -858,27 +842,10 @@ class SignUpState extends State<SignUpSreen> {
 
                                  ),*/
 
-
-
-
-
-                               )
-
-
-                             ),
-
-
-                              )
-
-
-                          ),
-
-
+                                        )),
+                              )),
                         ),
-
-
                       )
-
                     ],
                   ),
                 ),
@@ -901,8 +868,6 @@ class SignUpState extends State<SignUpSreen> {
                   child: Row(
                     children: <Widget>[
                       Container(
-
-
                         child: Text(
                           'WhatsApp Number',
                           style: TextStyle(
@@ -912,7 +877,6 @@ class SignUpState extends State<SignUpSreen> {
                               fontFamily: 'GilroySemibold'),
                         ),
                       ),
-
                       Padding(
                         padding: EdgeInsets.only(left: 6),
                         child: Switch(
@@ -928,16 +892,9 @@ class SignUpState extends State<SignUpSreen> {
                           inactiveThumbColor: MyColor.themeColor,
                         ),
                       ),
-
-
                     ],
-
-
                   ),
-
-
                 ),
-
 
                 Container(
                   height: 55,
@@ -972,29 +929,27 @@ class SignUpState extends State<SignUpSreen> {
                                 color: MyColor.boxBorder, width: 0.5),
                             color: Colors.white,
                           ),
-
                         ),
                       ),
-
                       GestureDetector(
-                        onTap: (){
-                          showDialog22('whatsapp');
-                        },
-
-                        child:Padding(
-                          padding: EdgeInsets.only(left: 40, bottom: 5),
-                          child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                width: 60,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(30),
-                                      bottomLeft: Radius.circular(30)),
-                                  color: MyColor.themeColor,
-                                ),
-                                child: Center(
-                                    child: /*Padding(
+                          onTap: () {
+                            showDialog22('whatsapp');
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 40, bottom: 5),
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                  width: 60,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(30),
+                                        bottomLeft: Radius.circular(30)),
+                                    color: MyColor.themeColor,
+                                  ),
+                                  child: Center(
+                                      child:
+                                          /*Padding(
                                     padding: EdgeInsets.only(left: 5),
                                     child: Theme(
                                         data: Theme.of(context).copyWith(
@@ -1033,31 +988,32 @@ class SignUpState extends State<SignUpSreen> {
 
 
                                   )*/
-                                    Padding(
-                                        padding: EdgeInsets.only(left:2),
-                                        child:Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-
-                                            Padding(
-                                              padding: EdgeInsets.only(left: 3),
-                                              child: Text(whatsAppNumber,style: TextStyle(color: Colors.white,fontSize: 12)),
-
-
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.only(right: 3),
-                                              child:  Icon(Icons.arrow_drop_down,color: Colors.white,),
-
-
-                                            ),
-
-                                          ],
-
-
-
-                                        )
-                                      /*Theme(
+                                          Padding(
+                                              padding: EdgeInsets.only(left: 2),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: <Widget>[
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 3),
+                                                    child: Text(whatsAppNumber,
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 12)),
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        right: 3),
+                                                    child: Icon(
+                                                      Icons.arrow_drop_down,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
+                                              /*Theme(
                                      data: Theme.of(context).copyWith(
                                        canvasColor: Colors.blue.shade200,
                                      ),
@@ -1086,25 +1042,9 @@ class SignUpState extends State<SignUpSreen> {
 
                                  ),*/
 
-
-
-
-
-                                    )
-
-
-                                ),
-
-
-                              )
-
-
-                          ),
-
-
-                        )
-                      )
-
+                                              )),
+                                )),
+                          ))
                     ],
                   ),
                 ),
@@ -1154,53 +1094,50 @@ class SignUpState extends State<SignUpSreen> {
                                 color: MyColor.boxBorder, width: 0.5),
                             color: Colors.white,
                           ),
-
                         ),
                       ),
-
                       GestureDetector(
-                        onTap: (){
-                          showDialog22('telephone');
-                        },
-
-                        child:Padding(
-                          padding: EdgeInsets.only(left: 40, top: 5),
-                          child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                width: 60,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(30),
-                                      bottomLeft: Radius.circular(30)),
-                                  color: MyColor.themeColor,
-                                ),
-                                child: Center(
-                                    child: Padding(
-                                        padding: EdgeInsets.only(left:2),
-                                        child:Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-
-                                            Padding(
-                                              padding: EdgeInsets.only(left: 3),
-                                              child: Text(telephoneNumber,style: TextStyle(color: Colors.white,fontSize: 12)),
-
-
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.only(right: 3),
-                                              child:  Icon(Icons.arrow_drop_down,color: Colors.white,),
-
-
-                                            ),
-
-                                          ],
-
-
-
-                                        )
-                                      /*Theme(
+                          onTap: () {
+                            showDialog22('telephone');
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 40, top: 5),
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                  width: 60,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(30),
+                                        bottomLeft: Radius.circular(30)),
+                                    color: MyColor.themeColor,
+                                  ),
+                                  child: Center(
+                                      child: Padding(
+                                          padding: EdgeInsets.only(left: 2),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+                                              Padding(
+                                                padding:
+                                                    EdgeInsets.only(left: 3),
+                                                child: Text(telephoneNumber,
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 12)),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    EdgeInsets.only(right: 3),
+                                                child: Icon(
+                                                  Icons.arrow_drop_down,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                          /*Theme(
                                      data: Theme.of(context).copyWith(
                                        canvasColor: Colors.blue.shade200,
                                      ),
@@ -1229,26 +1166,9 @@ class SignUpState extends State<SignUpSreen> {
 
                                  ),*/
 
-
-
-
-
-                                    )
-
-
-                                ),
-
-
-                              )
-
-
-                          ),
-
-
-                        )
-
-                      )
-
+                                          )),
+                                )),
+                          ))
                     ],
                   ),
                 ),
@@ -1298,52 +1218,50 @@ class SignUpState extends State<SignUpSreen> {
                                 color: MyColor.boxBorder, width: 0.5),
                             color: Colors.white,
                           ),
-
                         ),
                       ),
-
                       GestureDetector(
-                        onTap: (){
-                          showDialog22('wechat');
-                        },
-                        child:Padding(
-                          padding: EdgeInsets.only(left: 40, top: 5),
-                          child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                width: 60,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(30),
-                                      bottomLeft: Radius.circular(30)),
-                                  color: MyColor.themeColor,
-                                ),
-                                child: Center(
-                                    child: Padding(
-                                        padding: EdgeInsets.only(left:2),
-                                        child:Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-
-                                            Padding(
-                                              padding: EdgeInsets.only(left: 3),
-                                              child: Text(weNumber,style: TextStyle(color: Colors.white,fontSize: 12)),
-
-
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.only(right: 3),
-                                              child:  Icon(Icons.arrow_drop_down,color: Colors.white,),
-
-
-                                            ),
-
-                                          ],
-
-
-
-                                        )
-                                      /*Theme(
+                          onTap: () {
+                            showDialog22('wechat');
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 40, top: 5),
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                  width: 60,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(30),
+                                        bottomLeft: Radius.circular(30)),
+                                    color: MyColor.themeColor,
+                                  ),
+                                  child: Center(
+                                      child: Padding(
+                                          padding: EdgeInsets.only(left: 2),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+                                              Padding(
+                                                padding:
+                                                    EdgeInsets.only(left: 3),
+                                                child: Text(weNumber,
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 12)),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    EdgeInsets.only(right: 3),
+                                                child: Icon(
+                                                  Icons.arrow_drop_down,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                          /*Theme(
                                      data: Theme.of(context).copyWith(
                                        canvasColor: Colors.blue.shade200,
                                      ),
@@ -1372,27 +1290,9 @@ class SignUpState extends State<SignUpSreen> {
 
                                  ),*/
 
-
-
-
-
-                                    )
-
-
-                                ),
-
-
-                              )
-
-
-                          ),
-
-
-                        )
-
-
-                      )
-
+                                          )),
+                                )),
+                          ))
                     ],
                   ),
                 ),
@@ -1426,8 +1326,6 @@ class SignUpState extends State<SignUpSreen> {
                           child: Center(
                             child: TextWidget('Upload', Colors.black, 12),
                           )),
-
-
                     )
                   ],
                 ),
@@ -1435,10 +1333,65 @@ class SignUpState extends State<SignUpSreen> {
                 SizedBox(height: 15),
                 GestureDetector(
                   onTap: () {
-                    if (textControllerUserName.text == '' ||
+                    /*  showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (_) => SuccessDialog('Logged in successfully !!',context),
+                    );*/
+
+                    if (textControllerUserName.text == '') {
+                      showDialog(
+                        context: context,
+                        builder: (_) => ErrorDialog(
+                            'User Name/Email cannot be empty !!', context),
+                      );
+                    } else if (textControllerPassword.text == '') {
+                      showDialog(
+                        context: context,
+                        builder: (_) =>
+                            ErrorDialog('Password cannot be blank !!', context),
+                      );
+                    } else if (textControllerCompanyName.text == '') {
+                      showDialog(
+                        context: context,
+                        builder: (_) => ErrorDialog(
+                            ' Company name cannot be blank !!', context),
+                      );
+                    } else if (textControllerCity.text == '') {
+                      showDialog(
+                        context: context,
+                        builder: (_) => ErrorDialog(
+                            ' City name cannot be blank !!', context),
+                      );
+                    } else if (textControllerConfirmPassword.text == '') {
+                      showDialog(
+                        context: context,
+                        builder: (_) => ErrorDialog(
+                            'Confirm Password cannot be blank !!', context),
+                      );
+                    } else if (textControllerphone.text == '') {
+                      showDialog(
+                        context: context,
+                        builder: (_) => ErrorDialog(
+                            'Mobile Number cannot be left empty !! !!',
+                            context),
+                      );
+                    } else if (dropdownValue == 'Select User Type') {
+                      showDialog(
+                        context: context,
+                        builder: (_) => ErrorDialog(
+                            'Please select a user type !!', context),
+                      );
+                    } else if (dropdownValueCountry == 'Select Country') {
+                      showDialog(
+                        context: context,
+                        builder: (_) =>
+                            ErrorDialog('Please select a country !!', context),
+                      );
+                    }
+                    /*  if (textControllerUserName.text == '' ||
                         textControllerPassword.text == '' ||
                         textControllerCompanyName.text == ''
-
                         || textControllerCity.text == '' ||
                         textControllerConfirmPassword.text == '' ||
                         textControllerphone.text == '' ||
@@ -1446,24 +1399,45 @@ class SignUpState extends State<SignUpSreen> {
                         dropdownValueCountry == 'Select Country') {
                       MySnackbar.displaySnackbar(key, Colors.lightBlue,
                           'Please fill all the fields !!');
-                    }
+                    }*/
                     else if (textControllerPassword.text !=
                         textControllerConfirmPassword.text) {
-                      MySnackbar.displaySnackbar(key, Colors.lightBlue,
-                          'Password/Confirm Password dont match');
-                    }
-
-
-                    else {
+                      showDialog(
+                        context: context,
+                        builder: (_) => ErrorDialog(
+                            'Password/Confirm Password do not match !!',
+                            context),
+                      );
+                    } else {
                       if (callbackType == 'update') {
-                        UpdateUserDetails();
-                      }
-                      else {
+                        if (textControllerPassword.text == '') {
+                          showDialog(
+                            context: context,
+                            builder: (_) => ErrorDialog(
+                                'Password cannot be blank !!', context),
+                          );
+                        } else if (textControllerConfirmPassword.text == '') {
+                          showDialog(
+                            context: context,
+                            builder: (_) => ErrorDialog(
+                                'Confirm Password cannot be blank !!', context),
+                          );
+                        } else if (textControllerConfirmPassword.text !=
+                            textControllerPassword.text) {
+                          showDialog(
+                            context: context,
+                            builder: (_) => ErrorDialog(
+                                'Password/Confirm Password do not match !!',
+                                context),
+                          );
+                        } else {
+                          UpdateUserDetails();
+                        }
+                      } else {
                         registerUser();
                       }
                     }
                   },
-
                   child: Padding(
                     padding: EdgeInsets.only(left: 40, right: 40),
                     child: Card(
@@ -1475,15 +1449,13 @@ class SignUpState extends State<SignUpSreen> {
                           width: double.infinity,
                           height: 55,
                           child: Center(
-                              child: callbackType == 'update' ?
-                              TextWidget(
-                                  'UPDATE DETAILS', MyColor.whiteColor, 20) :
-                              TextWidget(
-                                  'REGISTRATION', MyColor.whiteColor, 20)
-                          )),
+                              child: callbackType == 'update'
+                                  ? TextWidget(
+                                      'UPDATE DETAILS', MyColor.whiteColor, 20)
+                                  : TextWidget(
+                                      'REGISTRATION', MyColor.whiteColor, 20))),
                     ),
                   ),
-
                 ),
                 SizedBox(height: 15),
               ],
@@ -1496,9 +1468,10 @@ class SignUpState extends State<SignUpSreen> {
 
   Future<Map<String, dynamic>> registerUser() async {
     String message = '';
-    String fileName = _image.path
-        .split("/")
-        .last;
+    String fileName = '';
+    if (_image != null) {
+      fileName = _image.path.split("/").last;
+    }
     APIDialog.showAlertDialog(context, 'Registering Account...');
     final Map<String, dynamic> collectedAuthData = {
       'vchUserType': dropdownValue,
@@ -1526,9 +1499,7 @@ class SignUpState extends State<SignUpSreen> {
       'vchProduct': textControllerProducts.text,
       'vchState': textControllerState.text,
       'vchFileName': fileName,
-      'nvrFile': imageAsBase64,
-
-      //'nvrFile': 'textControllerState',
+      'nvrFile': fileName == '' ? '' : imageAsBase64,
     };
     print(collectedAuthData);
 
@@ -1536,23 +1507,27 @@ class SignUpState extends State<SignUpSreen> {
       http.Response response;
       response = await http.post(
           'http://api.123etl.net/API/Master/InsertUserDetails',
-          body: collectedAuthData);
+          body: json.encode(collectedAuthData),
+          headers: {
+            'Content-Type': 'application/json',
+          });
       Map<String, dynamic> fetchResponse = json.decode(response.body);
       print(fetchResponse);
       Navigator.of(context, rootNavigator: true).pop();
 
       if (fetchResponse['Status'].toString() == 'true') {
-        Toast.show(
-          fetchResponse['Message'], context, duration: Toast.LENGTH_SHORT,
-          gravity: Toast.BOTTOM,
-          backgroundColor: Colors.lightBlue,);
         Navigator.pop(context, true);
-      }
-      else {
-        Toast.show(
-          fetchResponse['Message'], context, duration: Toast.LENGTH_SHORT,
-          gravity: Toast.BOTTOM,
-          backgroundColor: Colors.lightBlue,);
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) => SuccessDialog(fetchResponse['Message'], context),
+        );
+      } else {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) => ErrorDialog(fetchResponse['Message'], context),
+        );
       }
     } catch (errorMessage) {
       message = errorMessage.toString();
@@ -1561,10 +1536,12 @@ class SignUpState extends State<SignUpSreen> {
     }
   }
 
-
   Future<Map<String, dynamic>> UpdateUserDetails() async {
     String message = '';
-    print(userId + 'wddff');
+    String fileName = '';
+    if (_image != null) {
+      fileName = _image.path.split("/").last;
+    }
     APIDialog.showAlertDialog(context, 'Updating Details...');
     final Map<String, dynamic> collectedAuthData = {
       'vchUserType': dropdownValue,
@@ -1592,7 +1569,8 @@ class SignUpState extends State<SignUpSreen> {
       'vchWeChatCountryCode': weNumber,
       'vchProduct': textControllerProducts.text,
       'vchState': textControllerState.text,
-
+      'vchFileName': fileName,
+      'nvrFile': fileName == '' ? '' : imageAsBase64,
       //'nvrFile': 'textControllerState',
     };
 
@@ -1600,23 +1578,26 @@ class SignUpState extends State<SignUpSreen> {
       http.Response response;
       response = await http.post(
           'http://api.123etl.net/API/Master/InsertUserDetails',
-          body: collectedAuthData);
+          body: json.encode(collectedAuthData),
+          headers: {'Content-Type': 'application/json'});
       Map<String, dynamic> fetchResponse = json.decode(response.body);
       print(fetchResponse);
       Navigator.of(context, rootNavigator: true).pop();
 
       if (fetchResponse['Status'].toString() == 'true') {
-        Toast.show(
-          fetchResponse['Message'], context, duration: Toast.LENGTH_SHORT,
-          gravity: Toast.BOTTOM,
-          backgroundColor: Colors.lightBlue,);
         Navigator.pop(context, true);
-      }
-      else {
-        Toast.show(
-          fetchResponse['Message'], context, duration: Toast.LENGTH_SHORT,
-          gravity: Toast.BOTTOM,
-          backgroundColor: Colors.lightBlue,);
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) =>
+              SuccessDialog('Profile Updated Successfully !!', context),
+        );
+      } else {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) => ErrorDialog(fetchResponse['Message'], context),
+        );
       }
     } catch (errorMessage) {
       message = errorMessage.toString();
@@ -1624,7 +1605,6 @@ class SignUpState extends State<SignUpSreen> {
       Navigator.of(context, rootNavigator: true).pop();
     }
   }
-
 
   Future<Map<String, dynamic>> getCountryList() async {
     APIDialog.showAlertDialog(context, 'Fetching Countries.....');
@@ -1684,7 +1664,6 @@ class SignUpState extends State<SignUpSreen> {
     }
   }
 
-
   @override
   void initState() {
     // TODO: implement initState
@@ -1714,7 +1693,6 @@ class SignUpState extends State<SignUpSreen> {
     }
   }
 
-
   void checkInternetAPIcall2() async {
     if (await InternetCheck.check() == true) {
       getCountryCodeList();
@@ -1723,7 +1701,6 @@ class SignUpState extends State<SignUpSreen> {
           key, MyColor.noInternetColor, 'No Internet found !!');
     }
   }
-
 
   Future<Map<String, dynamic>> apiCall() async {
     String message = '';
@@ -1740,8 +1717,8 @@ class SignUpState extends State<SignUpSreen> {
       list = fetchResponse['Response']['Edit_UserDetails'];
       setState(() {
         textControllerUserName.text = list[0]['vchUserID'];
-        textControllerPassword.text = list[0]['nvrPassword'];
-        textControllerConfirmPassword.text = list[0]['nvrPassword'];
+        // textControllerPassword.text = list[0]['nvrPassword'];
+        //textControllerConfirmPassword.text = list[0]['nvrPassword'];
         // dropdownValue=list[0]['vchUserType'];
         textControllerCompanyName.text = list[0]['vchCompanyName'];
         textControllerAddress.text = list[0]['vchAddress'];
@@ -1780,9 +1757,13 @@ class SignUpState extends State<SignUpSreen> {
       List<int> imageBytes = _image.readAsBytesSync();
       imageAsBase64 = base64Encode(imageBytes);
     });
-    Toast.show('File Uploaded !!', context, duration: Toast.LENGTH_SHORT,
+    Toast.show(
+      'File Uploaded !!',
+      context,
+      duration: Toast.LENGTH_SHORT,
       gravity: Toast.BOTTOM,
-      backgroundColor: Colors.green,);
+      backgroundColor: Colors.green,
+    );
   }
 
   void showDialog22(String callbackType) {
@@ -1798,7 +1779,6 @@ class SignUpState extends State<SignUpSreen> {
           child: Scaffold(
             body: ListView(
               children: <Widget>[
-
                 /*Container(
                   height: 55,
                   width: double.infinity,
@@ -1865,97 +1845,57 @@ class SignUpState extends State<SignUpSreen> {
                     scrollDirection: Axis.vertical,
                     itemBuilder: (BuildContext context, int position) {
                       return GestureDetector(
-
-                        onTap: (){
-
-                          print('not trigger');
-                          Navigator.pop(context);
-                          if(callbackType=='phone')
-                            {
+                          onTap: () {
+                            print('not trigger');
+                            Navigator.pop(context);
+                            if (callbackType == 'phone') {
                               setState(() {
-                                phoneNumber=countryCodeData[position]['vchCallCode'];
+                                phoneNumber =
+                                    countryCodeData[position]['vchCallCode'];
+                              });
+                            } else if (callbackType == 'whatsapp') {
+                              setState(() {
+                                whatsAppNumber =
+                                    countryCodeData[position]['vchCallCode'];
+                              });
+                            } else if (callbackType == 'telephone') {
+                              setState(() {
+                                telephoneNumber =
+                                    countryCodeData[position]['vchCallCode'];
+                              });
+                            } else if (callbackType == 'wechat') {
+                              setState(() {
+                                weNumber =
+                                    countryCodeData[position]['vchCallCode'];
                               });
                             }
-                          else if(callbackType=='whatsapp')
-                            {
-                              setState(() {
-                                whatsAppNumber=countryCodeData[position]['vchCallCode'];
-                              });
-                            }
-                          else if(callbackType=='telephone')
-                            {
-                              setState(() {
-                                telephoneNumber=countryCodeData[position]['vchCallCode'];
-                              });
-                            }
-
-                          else if(callbackType=='wechat')
-                          {
-                            setState(() {
-                              weNumber=countryCodeData[position]['vchCallCode'];
-                            });
-                          }
-
-
-
-
-
-
-
-
-
-                        },
-
-                        child: Column(
-                          children: <Widget>[
-
-                            Container(
-
-                                width: double.infinity,
-                                margin: EdgeInsets.only(left: 10, right: 10),
-                                child: Padding(
-                                  padding: EdgeInsets.only(top: 10, bottom: 10),
-                                  child: Text(
-                                    countryCodeData[position]['vchCountryName'],
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    style: TextStyle(fontSize: 12,
-                                        color: Colors.black87,
-                                        fontFamily: 'GilroySemibold',
-                                        fontWeight: FontWeight.bold),
-
-                                  ),
-
-
-                                )
-                            ),
-
-                            Divider(color:MyColor.greyDivider)
-
-
-
-
-
-
-                          ],
-
-
-
-                        )
-
-                      );
-                    }
-
-
-                ),
-
-
+                          },
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                  width: double.infinity,
+                                  margin: EdgeInsets.only(left: 10, right: 10),
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.only(top: 10, bottom: 10),
+                                    child: Text(
+                                      countryCodeData[position]
+                                          ['vchCountryName'],
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.black87,
+                                          fontFamily: 'GilroySemibold',
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  )),
+                              Divider(color: MyColor.greyDivider)
+                            ],
+                          ));
+                    }),
               ],
-
-
             ),
-
-
           ),
           margin: EdgeInsets.only(bottom: 50, left: 15, right: 15, top: 50),
         );
@@ -1969,27 +1909,24 @@ class SignUpState extends State<SignUpSreen> {
     );
   }
 
-
   performSearch(String searchedText) {
-    print('trigger generated'+searchedText);
-    if(searchCountryCodeData.length!=0)
-      {
-        setState(() {
-          searchCountryCodeData.clear();
-        });
+    print('trigger generated' + searchedText);
+    if (searchCountryCodeData.length != 0) {
+      setState(() {
+        searchCountryCodeData.clear();
+      });
+    }
+
+    for (int i = 0; i < countryCodeData.length; i++) {
+      print(countryCodeData[i]['vchCountryName'] + 'scr');
+      if (countryCodeData[i]['vchCountryName']
+          .toString()
+          .toLowerCase()
+          .contains(searchedText)) {
+        searchCountryCodeData.add(countryCodeData[i]);
+        print(countryCodeData[i] + 'wdwft');
       }
-
-   for(int i=0;i<countryCodeData.length;i++)
-   {
-     print(countryCodeData[i]['vchCountryName']+'scr');
-     if(countryCodeData[i]['vchCountryName'].toString().toLowerCase().contains(searchedText))
-     {
-       searchCountryCodeData.add(countryCodeData[i]);
-       print(countryCodeData[i]+'wdwft');
-     }
-
-   }
-
+    }
 
     print(searchCountryCodeData.toString());
   }

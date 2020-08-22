@@ -46,6 +46,7 @@ flutter:
     - images/app_l.png
     - images/user.png
     - images/register.png
+    - images/cross_white.png
     - images/user_type.png
     - images/edit.png
     - images/delete.png

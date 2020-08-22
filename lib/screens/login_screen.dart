@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:everglobe/colors/colors.dart';
+import 'package:everglobe/dialog/error_dialog.dart';
+import 'package:everglobe/dialog/success_dialog.dart';
 import 'package:everglobe/screens/home.dart';
 import 'package:everglobe/screens/forgot_password_screen.dart';
 import 'package:everglobe/screens/sign_up_screen.dart';
@@ -11,8 +13,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:toast/toast.dart';
-
 class LoginScreen extends StatefulWidget {
   LoginPageState createState() => LoginPageState();
 }
@@ -319,13 +319,21 @@ class LoginPageState extends State<LoginScreen> {
       List<dynamic> list=fetchResponse['Response']['UserDetails'];
       if(list.length==0)
         {
-          MySnackbar.displaySnackbar(key, MyColor.noInternetColor, 'Invalid username/password');
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (_) => ErrorDialog('Invalid Username/Password !!',context),
+          );
         }
       else
         {
           print(fetchResponse['Response']['UserDetails'][0]['vchUserType']+'yui');
-          _saveUserDetail(fetchResponse['Response']['UserDetails'][0]['vchUserID'],fetchResponse['Response']['UserDetails'][0]['vchUserType'], fetchResponse['Response']['UserDetails'][0]['intUserID'].toString(),fetchResponse['Response']['UserDetails'][0]['vchUserID'],fetchResponse['Response']['UserDetails'][0]['dtCreatedDate'].toString(),fetchResponse['Response']['UserDetails'][0]['vchCompanyName']);
-          Toast.show('Login Successfully !', context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM,backgroundColor: Colors.lightBlue,);
+          _saveUserDetail(fetchResponse['Response']['UserDetails'][0]['vchUserID'],fetchResponse['Response']['UserDetails'][0]['vchUserType'], fetchResponse['Response']['UserDetails'][0]['intUserID'].toString(),fetchResponse['Response']['UserDetails'][0]['vchUserID'],fetchResponse['Response']['UserDetails'][0]['dtCreatedDate'].toString(),fetchResponse['Response']['UserDetails'][0]['vchCompanyName'],fetchResponse['Response']['UserDetails'][0]['vchCity'],fetchResponse['Response']['UserDetails'][0]['vchState'],fetchResponse['Response']['UserDetails'][0]['vchCountry']);
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (_) => SuccessDialog('Logged In successfully !!',context),
+          );
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => HomeScreen(fetchResponse['Message'])),
@@ -340,7 +348,7 @@ class LoginPageState extends State<LoginScreen> {
     }
   }
 
-  _saveUserDetail(String email,String usertype,String userId,String userName,String registeredOn,String companyName)
+  _saveUserDetail(String email,String usertype,String userId,String userName,String registeredOn,String companyName,String city,String state,String country)
   async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('email', email);
@@ -349,6 +357,9 @@ class LoginPageState extends State<LoginScreen> {
     prefs.setString('username', userName);
     prefs.setString('registered', registeredOn);
     prefs.setString('company', companyName);
+    prefs.setString('city', city);
+    prefs.setString('state', state);
+    prefs.setString('country', country);
   }
 
 /*  void checkInternetAPIcall() async {

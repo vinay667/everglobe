@@ -17,6 +17,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../colors/colors.dart';
 import 'buy_screen.dart';
 class HomeScreen extends StatefulWidget
 {
@@ -223,10 +224,16 @@ class HomePageState extends State<HomeScreen>
                         ),
 
                       ),
-                      Padding(
-                        padding:EdgeInsets.only(right: 20),
-                        child: Image.asset('images/app_l.png',width: 40,height: 50,color: Colors.white),
-                      ),
+                      GestureDetector(
+                        onTap: (){
+                          fetchProductList();
+                        },
+                        child: Padding(
+                          padding:EdgeInsets.only(right: 20),
+                          child: Image.asset('images/app_l.png',width: 40,height: 50,color: Colors.white),
+                        ),
+
+                      )
 
 
 
@@ -319,15 +326,7 @@ class HomePageState extends State<HomeScreen>
                             onTap: (){
 
 
-                              if(token=='notLogin')
-                              {
-                                showLogInDialog(context);
-                              }
-                              else
-                              {
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SELLING OFFERS','View','seller',token)));
-
-                              }
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('SELLING OFFERS','View','seller',token)));
 
 
                             },
@@ -351,15 +350,8 @@ class HomePageState extends State<HomeScreen>
                           GestureDetector(
                             onTap: (){
 
-                              if(token=='notLogin')
-                              {
-                                showLogInDialog(context);
-                              }
-                              else
-                              {
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('BUYING REQUEST','View','buyer',token)));
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>RefineSearchScreen('BUYING REQUEST','View','buyer',token)));
 
-                              }
                             },
                             child: Container(
                                 decoration: BoxDecoration(
@@ -910,7 +902,7 @@ class HomePageState extends State<HomeScreen>
 
                                                   },
                                                   child: Center(
-                                                      child: TextWidget(productList[position]['vchUserType'],Colors.brown,16)
+                                                      child: TextWidget(productList[position]['vchUserType'],productList[position]['vchUserType']=='buyer'?MyColor.noInternetColor:Colors.teal,16)
                                                   ),
 
                                                 ),

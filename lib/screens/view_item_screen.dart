@@ -15,10 +15,8 @@ import 'package:url_launcher/url_launcher.dart';
 class ViewItemScreen extends StatefulWidget{
   String productId;
   ViewItemScreen(this.productId);
-
   ViewItemState createState()=>ViewItemState(productId);
 }
-
 class ViewItemState extends State<ViewItemScreen>
 {
   GlobalKey<ScaffoldState> key = new GlobalKey<ScaffoldState>();
@@ -181,7 +179,21 @@ class ViewItemState extends State<ViewItemScreen>
 
 
                                 list.length!=0?
-                                TextWidget(list[0]['vchUserID'],Colors.black,15):Text(''),
+                              Container(height: 20,
+                              child:  Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    TextWidget(list[0]['vchCity']==null?'':list[0]['vchCity']+',', Colors.black, 15),
+                                    TextWidget(list[0]['vchState']==null?'':list[0]['vchState']+',', Colors.black, 15),
+                                    TextWidget(list[0]['vchCountry']==null?'':list[0]['vchCountry'], Colors.black, 15),
+                                  ],
+
+
+                                ),
+                              ),
+
+                            ):Text(''),
                                 SizedBox(width: 5),
                                 Container(
                                     width: 20,
@@ -215,7 +227,7 @@ class ViewItemState extends State<ViewItemScreen>
                           Center(
 
                             child: list.length!=0?
-                            TextWidget(list[0]['vchCountry']+','+list[0]['vchCity']+','+list[0]['vchZipCode'].toString(),Colors.black,15):Text('')
+                            TextWidget(list[0]['vchCompanyName'],Colors.black,15):Text('')
                           ),
                           SizedBox(height: 20),
 

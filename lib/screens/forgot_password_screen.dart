@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:everglobe/colors/colors.dart';
+import 'package:everglobe/dialog/success_dialog.dart';
 import 'package:everglobe/utils/api_dialog.dart';
 import 'package:everglobe/utils/snackbar.dart';
 import 'package:everglobe/widgets/text_widget.dart';
@@ -257,14 +258,25 @@ class ForgotPasswordState extends State<ForgotPasswordScreen>
       Map<String, dynamic> fetchResponse = json.decode(response.body);
       print(fetchResponse);
       Navigator.of(context, rootNavigator: true).pop();
-      Toast.show('Password Updated Successfully !! !', context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM,backgroundColor: Colors.green,);
-     Navigator.pop(context,true);
+      Navigator.pop(context,true);
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => SuccessDialog('Password Updated Successfully !!',context),
+      );
+
+
     } catch (errorMessage) {
       message = errorMessage.toString();
       print(message);
       Navigator.of(context, rootNavigator: true).pop();
-      Toast.show('Password Updated Successfully !! !', context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM,backgroundColor: Colors.green,);
       Navigator.pop(context,true);
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => SuccessDialog('Password Updated Successfully !!',context),
+      );
+
       //Navigator.pop(context);
     }
   }
