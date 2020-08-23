@@ -1719,7 +1719,7 @@ class SignUpState extends State<SignUpSreen> {
         textControllerUserName.text = list[0]['vchUserID'];
         // textControllerPassword.text = list[0]['nvrPassword'];
         //textControllerConfirmPassword.text = list[0]['nvrPassword'];
-        // dropdownValue=list[0]['vchUserType'];
+        dropdownValue=list[0]['vchUserType'];
         textControllerCompanyName.text = list[0]['vchCompanyName'];
         textControllerAddress.text = list[0]['vchAddress'];
         textControllerZipCode.text = list[0]['vchZipCode'].toString();
@@ -1737,7 +1737,6 @@ class SignUpState extends State<SignUpSreen> {
       message = errorMessage.toString();
       print(message);
       Navigator.of(context, rootNavigator: true).pop();
-      //Navigator.pop(context);
     }
   }
 

@@ -624,18 +624,14 @@ class RefineSearchState extends State<RefineSearchScreen>
                                        )
 
                                    ),
-
-
                                  ),
-
-
 
 
                                  SizedBox(height:5),
                                  searchList2[position]['vchTitle']!=null?
                                  Text(
                                    searchList2[position]['vchTitle'],
-                                   style: TextStyle(fontSize: 12,color: MyColor.greyTextColor,fontFamily: 'GilroySemibold'),
+                                   style: TextStyle(fontSize: 12,color: searchList2[position]['vchUserType']=='buyer'?MyColor.noInternetColor:Colors.teal,fontFamily: 'GilroySemibold'),
                                    maxLines: 2,
                                    overflow: TextOverflow.ellipsis,
                                  ):

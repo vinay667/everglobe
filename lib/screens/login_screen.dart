@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:everglobe/colors/colors.dart';
 import 'package:everglobe/dialog/error_dialog.dart';
 import 'package:everglobe/dialog/success_dialog.dart';
@@ -13,6 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+
 class LoginScreen extends StatefulWidget {
   LoginPageState createState() => LoginPageState();
 }
@@ -21,6 +21,7 @@ class LoginPageState extends State<LoginScreen> {
   GlobalKey<ScaffoldState> key = new GlobalKey<ScaffoldState>();
   var textControllerUserName = new TextEditingController();
   var textControllerPassword = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,20 +34,16 @@ class LoginPageState extends State<LoginScreen> {
             Column(
               children: <Widget>[
                 SizedBox(height: 25),
-
-
-
-                Image.asset('images/app_l.png',width: 80,height: 80,),
-
-
+                Image.asset(
+                  'images/app_l.png',
+                  width: 80,
+                  height: 80,
+                ),
                 SizedBox(height: 15),
                 Container(
                   width: double.infinity,
                   child: Center(
-
                     child: TextWidget('LOG IN', MyColor.greyTextColor, 30),
-
-
                   ),
                 ),
                 SizedBox(height: 15),
@@ -66,9 +63,7 @@ class LoginPageState extends State<LoginScreen> {
                   height: 55,
                   width: double.infinity,
                   child: Stack(
-
                     children: <Widget>[
-
                       Padding(
                         padding: EdgeInsets.only(left: 40, right: 40, top: 5),
                         child: Container(
@@ -92,34 +87,25 @@ class LoginPageState extends State<LoginScreen> {
                           ),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                            border: Border.all(
-                                color: MyColor.boxBorder, width: 1),
+                            border:
+                                Border.all(color: MyColor.boxBorder, width: 1),
                             color: Colors.white,
                           ),
-
                         ),
                       ),
-
                       Align(
                           alignment: Alignment.centerRight,
                           child: Padding(
                             padding: EdgeInsets.only(right: 60),
                             child: Image.asset(
-                                'images/user_c.png', width: 18, height: 18,color: MyColor.themeColor,),
-
-
-                          )
-
-
-                      )
-
-
+                              'images/user_c.png',
+                              width: 18,
+                              height: 18,
+                              color: MyColor.themeColor,
+                            ),
+                          ))
                     ],
-
-
                   ),
-
-
                 ),
                 Container(
                   width: double.infinity,
@@ -137,9 +123,7 @@ class LoginPageState extends State<LoginScreen> {
                   height: 55,
                   width: double.infinity,
                   child: Stack(
-
                     children: <Widget>[
-
                       Padding(
                         padding: EdgeInsets.only(left: 40, right: 40, top: 5),
                         child: Container(
@@ -154,8 +138,6 @@ class LoginPageState extends State<LoginScreen> {
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.only(left: 10.0),
                               border: InputBorder.none,
-
-
                               hintText: 'Password',
                               hintStyle: TextStyle(
                                   color: MyColor.lightGreyTextColor,
@@ -166,41 +148,34 @@ class LoginPageState extends State<LoginScreen> {
                           ),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                            border: Border.all(
-                                color: MyColor.boxBorder, width: 1),
+                            border:
+                                Border.all(color: MyColor.boxBorder, width: 1),
                             color: Colors.white,
                           ),
-
                         ),
                       ),
-
                       Align(
                           alignment: Alignment.centerRight,
                           child: Padding(
                             padding: EdgeInsets.only(right: 60),
-                            child: Image.asset(
-                                'images/password_icon.png', width: 18, height: 18,color: MyColor.themeColor),
-
-
-                          )
-
-
-                      )
+                            child: Image.asset('images/password_icon.png',
+                                width: 18,
+                                height: 18,
+                                color: MyColor.themeColor),
+                          ))
                     ],
                   ),
                 ),
                 SizedBox(height: 15),
                 GestureDetector(
-                  onTap: (){
-                    if(textControllerUserName.text=='' || textControllerPassword.text=='')
-                      {
-                        MySnackbar.displaySnackbar(key, Colors.blue, 'Please fill all fields');
-                      }
-                    else
-                      {
-                        loginUser();
-                      }
-
+                  onTap: () {
+                    if (textControllerUserName.text == '' ||
+                        textControllerPassword.text == '') {
+                      MySnackbar.displaySnackbar(
+                          key, Colors.blue, 'Please fill all fields');
+                    } else {
+                      loginUser();
+                    }
                   },
                   child: Padding(
                     padding: EdgeInsets.only(left: 40, right: 40),
@@ -214,20 +189,9 @@ class LoginPageState extends State<LoginScreen> {
                           height: 55,
                           child: Center(
                             child: TextWidget('LOGIN', MyColor.whiteColor, 20),
-
-
-                          )
-
-
-                      ),
-
-
+                          )),
                     ),
-
-
                   ),
-
-
                 ),
                 SizedBox(height: 15),
                 Padding(
@@ -237,71 +201,47 @@ class LoginPageState extends State<LoginScreen> {
                     children: <Widget>[
                       TextWidget('', Colors.black87, 13),
                       GestureDetector(
-                        onTap: (){
-                          Navigator.push(context, CupertinoPageRoute(builder: (context) =>ForgotPasswordScreen()));
-
-
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (context) =>
+                                      ForgotPasswordScreen()));
                         },
-                        child: TextWidget('FORGOT PASSWORD', Colors.black87, 13),
-
+                        child:
+                            TextWidget('FORGOT PASSWORD', Colors.black87, 13),
                       )
-
-
                     ],
-
-
                   ),
-
-
                 ),
                 SizedBox(height: 40),
                 InkWell(
                   onTap: () {
-                    Navigator.push(context, CupertinoPageRoute(
-                        builder: (context) => SignUpSreen('register')));
+                    Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                            builder: (context) => SignUpSreen('register')));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-
                       TextWidget(
                           "Don't  have account?", MyColor.greyTextColor, 14),
                       Text(
-                        'Sign Up Here', style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black87,
-                          fontWeight: FontWeight.bold
-
-
-                      ),
-
-
+                        'Sign Up Here',
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black87,
+                            fontWeight: FontWeight.bold),
                       )
-
-
                     ],
-
-
                   ),
-
                 )
-
-
               ],
-
-
             )
-
-
           ],
-
-
         ),
-
-
       ),
-
-
     );
   }
 
@@ -311,35 +251,46 @@ class LoginPageState extends State<LoginScreen> {
     try {
       http.Response response;
       response = await http.get(
-          'http://api.123etl.net/API/Master/GetValidUser?vchUserID='+textControllerUserName.text+'&nvrPassword='+textControllerPassword.text,
- );
+        'http://api.123etl.net/API/Master/GetValidUser?vchUserID=' +
+            textControllerUserName.text +
+            '&nvrPassword=' +
+            textControllerPassword.text,
+      );
       Map<String, dynamic> fetchResponse = json.decode(response.body);
       print(fetchResponse);
       Navigator.of(context, rootNavigator: true).pop();
-      List<dynamic> list=fetchResponse['Response']['UserDetails'];
-      if(list.length==0)
-        {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (_) => ErrorDialog('Invalid Username/Password !!',context),
-          );
-        }
-      else
-        {
-          print(fetchResponse['Response']['UserDetails'][0]['vchUserType']+'yui');
-          _saveUserDetail(fetchResponse['Response']['UserDetails'][0]['vchUserID'],fetchResponse['Response']['UserDetails'][0]['vchUserType'], fetchResponse['Response']['UserDetails'][0]['intUserID'].toString(),fetchResponse['Response']['UserDetails'][0]['vchUserID'],fetchResponse['Response']['UserDetails'][0]['dtCreatedDate'].toString(),fetchResponse['Response']['UserDetails'][0]['vchCompanyName'],fetchResponse['Response']['UserDetails'][0]['vchCity'],fetchResponse['Response']['UserDetails'][0]['vchState'],fetchResponse['Response']['UserDetails'][0]['vchCountry']);
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (_) => SuccessDialog('Logged In successfully !!',context),
-          );
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => HomeScreen(fetchResponse['Message'])),
-              ModalRoute.withName("/home"));
-        }
-
+      List<dynamic> list = fetchResponse['Response']['UserDetails'];
+      if (list.length == 0) {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) => ErrorDialog('Invalid Username/Password !!', context),
+        );
+      } else {
+        print(
+            fetchResponse['Response']['UserDetails'][0]['vchUserType'] + 'yui');
+        _saveUserDetail(
+            fetchResponse['Response']['UserDetails'][0]['vchUserID'],
+            fetchResponse['Response']['UserDetails'][0]['vchUserType'],
+            fetchResponse['Response']['UserDetails'][0]['intUserID'].toString(),
+            fetchResponse['Response']['UserDetails'][0]['vchUserID'],
+            fetchResponse['Response']['UserDetails'][0]['dtCreatedDate']
+                .toString(),
+            fetchResponse['Response']['UserDetails'][0]['vchCompanyName'],
+            fetchResponse['Response']['UserDetails'][0]['vchCity'],
+            fetchResponse['Response']['UserDetails'][0]['vchState'],
+            fetchResponse['Response']['UserDetails'][0]['vchCountry']);
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) => SuccessDialog('Logged In successfully !!', context),
+        );
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (context) => HomeScreen(fetchResponse['Message'])),
+            ModalRoute.withName("/home"));
+      }
     } catch (errorMessage) {
       message = errorMessage.toString();
       print(message);
@@ -347,17 +298,25 @@ class LoginPageState extends State<LoginScreen> {
       //Navigator.pop(context);
     }
   }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    textControllerUserName.text='vinay@gmail.com';
-    textControllerPassword.text='123456';
+    textControllerUserName.text = 'vinay@gmail.com';
+    textControllerPassword.text = '123456';
   }
 
-
-  _saveUserDetail(String email,String usertype,String userId,String userName,String registeredOn,String companyName,String city,String state,String country)
-  async {
+  _saveUserDetail(
+      String email,
+      String usertype,
+      String userId,
+      String userName,
+      String registeredOn,
+      String companyName,
+      String city,
+      String state,
+      String country) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('email', email);
     prefs.setString('usertype', usertype);
@@ -378,6 +337,5 @@ class LoginPageState extends State<LoginScreen> {
           key, MyColor.noInternetColor, 'No Internet found !!');
     }
   }*/
-
 
 }
