@@ -434,7 +434,7 @@ class BuyScreenState extends State<BuyScreen> {
       print(fetchResponse);
       Navigator.pop(context);
       if (fetchResponse['Status'].toString() == 'true') {
-        Navigator.pop(context, true);
+        Navigator.pop(context, 'Product Inserted');
         showDialog(
           context: context,
           barrierDismissible: false,
@@ -489,7 +489,7 @@ class BuyScreenState extends State<BuyScreen> {
       print(fetchResponse);
       Navigator.pop(context);
       if (fetchResponse['Status'].toString() == 'true') {
-        Navigator.pop(context, true);
+        Navigator.pop(context, 'Product Updated');
         showDialog(
           context: context,
           barrierDismissible: false,

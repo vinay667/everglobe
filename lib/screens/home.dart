@@ -255,14 +255,18 @@ class HomePageState extends State<HomeScreen>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           GestureDetector(
-                            onTap: (){
+                            onTap: () async {
                               if(token=='notLogin')
                               {
                                 showLogInDialog(context);
                               }
                               else
                               {
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>BuyScreen('SELL','','','','','')));
+                               final taskTray=await  Navigator.push(context, MaterialPageRoute(builder: (context)=>BuyScreen('SELL','','','','','')));
+                             if(taskTray!=null)
+                               {
+                                 checkInternetAPIcall();
+                               }
                               }
 
                             },
@@ -285,14 +289,18 @@ class HomePageState extends State<HomeScreen>
 
                           SizedBox(width: 10),
                           GestureDetector(
-                            onTap: (){
+                            onTap: () async {
                               if(token=='notLogin')
                               {
                                 showLogInDialog(context);
                               }
                               else
                               {
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>BuyScreen('BUY','','','','','')));
+                               final taskTray= await Navigator.push(context, MaterialPageRoute(builder: (context)=>BuyScreen('BUY','','','','','')));
+                               if(taskTray!=null)
+                                 {
+                                   checkInternetAPIcall();
+                                 }
                               }
                             },
 
