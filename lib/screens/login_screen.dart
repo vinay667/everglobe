@@ -303,8 +303,6 @@ class LoginPageState extends State<LoginScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    textControllerUserName.text = 'vinay@gmail.com';
-    textControllerPassword.text = '123456';
   }
 
   _saveUserDetail(
